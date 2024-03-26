@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程名：{{ Course.CourseName }}</title>
+</head>
+<body>
+{% for Experiment in Course.Experiments.all %}
+<div>
+<h2>{{ Experiment.ExperimentName }}</h2>
+<h3>{{ Experiment.ExperimentInformation }}</h3>
+<h4>{{ Experiment.ExperimentImage }}</h4>
+<h4>{{ Experiment.ExperimentPorts }}</h4>
+<h4>{{ Experiment.ExperimentGuidance.GuidanceName }}</h4>
+</div>
+    <hr/>
+{% endfor %}
+</body>
+</html>
