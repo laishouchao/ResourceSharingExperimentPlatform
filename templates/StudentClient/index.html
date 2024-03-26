@@ -5,45 +5,43 @@
     <title>资源共享实验平台主页</title>
 </head>
 <body>
-{% if user.is_authenticated %}
-    <li><a href="/PasswordChange/">{{ user.username }}，您好！</a></li>
-    <li><a href="/Logout/">注销</a></li>
-{% else %}
-    <li><a href="/Login/">登陆</a></li>
-{% endif %}
-
-{% if user.is_superuser %}
-    <li><a href="/admin/">后台管理</a></li>
-{% endif %}
-
-{#比赛列表#}
-<div class="container">
-    {#主体#}
-    {% for CourseInfo in CourseInfos %}
-        <div>
-            <h1>{{ CourseInfo.CourseName }}</h1>
-            <p>{{ CourseInfo.CourseContent }}</p>
-            <p>{{ CourseInfo.CourseStartTime | date:'Y年m月d日 H:i' }}
-                至 {{ CourseInfo.CourseStopTime | date:'Y年m月d日 H:i' }}</p>
-            <p>{{ CourseInfo.JoinUsers.username }}</p>
-            <p>{{ CourseInfo.Experiments.ExperimentName }}</p>
-            <p>{{ CourseInfo.TemplateOfExperimentReport }}</p>
-            <p><a href="/Course/?id={{ CourseInfo.id }}" role="button">进入课程</a></p>
-        </div>
-    {% endfor %}
+<div class="navbar">
+    {% include 'StudentClient/header.html' %}
 </div>
-<div>
-    <nav>
-        <ul>
-            {% if CourseInfos.has_previous %}
-                <li><a href="?page={{ CourseInfos.previous_page_number }}">上一页</a></li>
-            {% endif %}
-            第 {{ CourseInfos.number }} / {{ CourseInfos.paginator.num_pages }}页
-            {% if CourseInfos.has_next %}
-                <li><a href="?page={{ CourseInfos.next_page_number }}">下一页</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-</div>
+<main>
+    <section class="course-list">
+        {% for CourseInfo in CourseInfos %}
+            <div class="course-item">
+                <div>
+                    <h2>{{ CourseInfo.CourseName }}</h2>
+                    <p>{{ CourseInfo.CourseContent }}</p>
+                    <p>{{ CourseInfo.CourseStartTime | date:'Y年m月d日 H:i' }}</p>
+                    <p>{{ CourseInfo.CourseStopTime | date:'Y年m月d日 H:i' }}</p>
+                    <button class="view-details-btn"
+                            onclick="window.location.href='/Course/?CourseID={{ CourseInfo.id }}'">查看详情</button>
+                    {% if CourseInfo.TemplateOfExperimentReport %}
+                    <button class="view-details-btn"
+                            onclick="window.location.href='/{{ CourseInfo.TemplateOfExperimentReport }}'">下载实验报告模板</button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+
+    {#翻页按钮#}
+    <div>
+        <nav>
+            <ul>
+                {% if CourseInfos.has_previous %}
+                    <li><a href="?page={{ CourseInfos.previous_page_number }}">上一页</a></li>
+                {% endif %}
+                第 {{ CourseInfos.number }} / {{ CourseInfos.paginator.num_pages }}页
+                {% if CourseInfos.has_next %}
+                    <li><a href="?page={{ CourseInfos.next_page_number }}">下一页</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</main>
 </body>
 </html>

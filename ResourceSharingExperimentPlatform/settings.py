@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import os
+import os, time
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admindocs',     # admindoc模块
+    'django.contrib.admindocs',  # admindoc模块
     'GeneralInformation.apps.GeneralinformationConfig',
     'EnvironmentalInformation.apps.EnvironmentalinformationConfig',
     'SystemSettings.apps.SystemsettingsConfig',
     'StudentClient.apps.StudentclientConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -167,6 +168,55 @@ SIMPLEUI_DEFAULT_THEME = 'generic.css'
 SIMPLEUI_STATIC_OFFLINE = True
 # SIMPLEUI LOGO
 SIMPLEUI_LOGO = '/static/logo.jpg'
+
+SIMPLEUI_CONFIG = {
+    'system_keep': True,
+    'menu_display': ['课程管理', '基础 环境', '认证和授权', '系统配置'],  # 开启排序和过滤功能, 不填此字段为默认排序和全部显示, 空列表[] 为全部不显示.
+    'dynamic': True,  # 设置是否开启动态菜单, 默认为False. 如果开启, 则会在每次用户登陆时动态展示菜单内容
+    'menus': [{'app': 'GeneralInformation',
+               'name': '课程管理',
+               'icon': 'fas fa-book-reader',
+               'models': [{
+                   'name': '专业班级',
+                   'icon': 'fas fa-user-graduate',
+                   'url': 'GeneralInformation/classmanagement/',
+               }, {
+                   'name': '课时管理',
+                   'icon': 'fas fa-vials',
+                   'url': 'GeneralInformation/coursemanagement/',
+               }, {
+                   'name': '实验容器',
+                   'icon': 'fas fa-box',
+                   'url': 'GeneralInformation/containermanagement/',
+               }, {
+                   'name': '实验报告',
+                   'icon': 'fas fa-file-word',
+                   'url': 'GeneralInformation/experimentalreport/',
+               },
+               ]},
+
+              {'app': 'EnvironmentalInformation',
+               'name': '基础 环境',
+               'icon': 'fas fa-flask',
+               'models': [{
+                   'name': '实验指导书',
+                   'icon': 'fas fa-book-open',
+                   'url': 'EnvironmentalInformation/guidances/',
+               }, {
+                   'name': '实验基础环境',
+                   'icon': 'fas fa-vials',
+                   'url': 'EnvironmentalInformation/experiments/',
+               }]
+               },
+              {
+                  'name': '系统配置',
+                  'icon': 'fas fa-cogs',
+                  'url': '/admin/SystemSettings/systemsetting/1/change/',
+                  # 浏览器新标签中打开
+                  'newTab': False,
+              }]
+}
+
 DJANGO_SETTINGS_MODULE = ''
 
 # 登录成功后跳转回主页

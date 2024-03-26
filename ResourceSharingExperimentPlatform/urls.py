@@ -31,6 +31,9 @@ urlpatterns = [
 
     path('', StudentClient.views.GetIndexPage),  # 系统主页，显示所有的课程信息
     path('Course/', StudentClient.views.GetCoursePage),  # 课程页面，显示所有的实验
+    path('Experiment/', StudentClient.views.ExperimentPage),  # 课程页面，显示所有的实验
+    path('Register/', StudentClient.views.Register),
+    path('UploadExperimentalReport/', StudentClient.views.UploadExperimentalReport),
 
 
     # path('hello', pingtai.views.HelloWorld),  # 环境测试函数

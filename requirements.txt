@@ -1,0 +1,6 @@
+simpleui    #后台的解面
+django==3.2.8   # Python的WEB框架
+django-ckeditor # CKEditor开源的多媒体编辑器
+docker  # Python和Docker交互的库，可以直接操作Docker，创建修改删除等
+django_extensions
+docutils

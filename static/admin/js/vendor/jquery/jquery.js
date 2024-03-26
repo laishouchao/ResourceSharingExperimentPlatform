@@ -1782,8 +1782,8 @@
                                                 (diff = nodeIndex = 0) || start.pop())) {
 
                                                 if ((ofType ?
-                                                    node.nodeName.toLowerCase() === name :
-                                                    node.nodeType === 1) &&
+                                                        node.nodeName.toLowerCase() === name :
+                                                        node.nodeType === 1) &&
                                                     ++diff) {
 
                                                     // Cache the index of each encountered element
@@ -2384,8 +2384,8 @@
                             return setMatcher(
                                 i > 1 && elementMatcher(matchers),
                                 i > 1 && toSelector(
-                                // If the preceding token was a descendant combinator, insert an implicit any-element `*`
-                                tokens.slice(0, i - 1).concat({value: tokens[i - 2].type === " " ? "*" : ""})
+                                    // If the preceding token was a descendant combinator, insert an implicit any-element `*`
+                                    tokens.slice(0, i - 1).concat({value: tokens[i - 2].type === " " ? "*" : ""})
                                 ).replace(rtrim, "$1"),
                                 matcher,
                                 i < j && matcherFromTokens(tokens.slice(i, j)),
@@ -5921,11 +5921,11 @@
     function augmentWidthOrHeight(elem, name, extra, isBorderBox, styles) {
         var i = extra === (isBorderBox ? "border" : "content") ?
 
-            // If we already have the right measurement, avoid augmentation
-            4 :
+                // If we already have the right measurement, avoid augmentation
+                4 :
 
-            // Otherwise initialize for horizontal or vertical properties
-            name === "width" ? 1 : 0,
+                // Otherwise initialize for horizontal or vertical properties
+                name === "width" ? 1 : 0,
 
             val = 0;
 
@@ -6890,7 +6890,7 @@
             // Show any hidden elements after setting opacity to 0
             return this.filter(isHidden).css("opacity", 0).show()
 
-            // Animate to the value specified
+                // Animate to the value specified
                 .end().animate({opacity: to}, speed, easing, callback);
         },
         animate: function (prop, speed, easing, callback) {
@@ -7834,7 +7834,7 @@
             if (!onlyHandlers && !event.isDefaultPrevented()) {
 
                 if ((!special._default ||
-                    special._default.apply(eventPath.pop(), data) === false) &&
+                        special._default.apply(eventPath.pop(), data) === false) &&
                     acceptData(elem)) {
 
                     // Call a native DOM method on the target with the same name name as the event.
@@ -7913,8 +7913,8 @@
 
 
     jQuery.each(("blur focus focusin focusout load resize scroll unload click dblclick " +
-        "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-        "change select submit keydown keypress keyup error contextmenu").split(" "),
+            "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+            "change select submit keydown keypress keyup error contextmenu").split(" "),
         function (i, name) {
 
             // Handle event binding

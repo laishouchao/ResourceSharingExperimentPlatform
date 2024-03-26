@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Experiments, Guidances, ContainerManagement
+from .models import Experiments, Guidances
 from EnvironmentalInformation.forms import GuidancesAdminForm   # 导入自定义富文本编辑器CKEditor的表单
 
 
@@ -24,14 +24,3 @@ class GuidancesAdmin(admin.ModelAdmin):
     def render_guidance_content(self, obj):
         return mark_safe(obj.GuidanceContent)
 
-@admin.register(ContainerManagement)
-class ContainerManagementAdmin(admin.ModelAdmin):
-    list_display = (
-    'ContainerName', 'ContainerUser', 'ContainerImage', 'ContainerPorts', 'ContainerStartTime')
-    search_fields = ['ContainerName', 'ContainerCourse']
-    list_filter = ['ContainerUser', 'ContainerStartTime']
-    fields = ['ContainerName', 'ContainerUser', 'ContainerImage', 'ContainerPorts',
-              'ContainerStartTime']
-
-    def has_add_permission(self, request):
-        return False

@@ -3,17 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <title>课程名：{{ Course.CourseName }}</title>
+    <style>
+        .upload-container {
+            width: 30%;
+            height: 50px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .upload-zone {
+            text-align: center;
+        }
+
+        .upload-zone i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .upload-zone p {
+            font-size: 18px;
+            color: #ccc;
+        }
+
+        #file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        input[type="submit"] {
+            position: absolute;
+            bottom: 5px;
+            right: -100px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background: #3e8e41;
+        }
+
+        body.is-dragover {
+            background: #f0f0f0;
+        }
+
+    </style>
 </head>
 <body>
-{% for Experiment in Course.Experiments.all %}
-<div>
-<h2>{{ Experiment.ExperimentName }}</h2>
-<h3>{{ Experiment.ExperimentInformation }}</h3>
-<h4>{{ Experiment.ExperimentImage }}</h4>
-<h4>{{ Experiment.ExperimentPorts }}</h4>
-<h4>{{ Experiment.ExperimentGuidance.GuidanceName }}</h4>
+<div class="navbar">
+    {% include 'StudentClient/header.html' %}
 </div>
-    <hr/>
-{% endfor %}
+<main>
+
+    <section class="course-list">
+
+        {% for Experiment in Course.Experiments.all %}
+            <div class="course-item">
+                <h2>{{ Experiment.ExperimentName }}</h2>
+                <h3>信息：{{ Experiment.ExperimentInformation }}</h3>
+                <h4>实验环境：{{ Experiment.ExperimentImage }}</h4>
+                <h4>容器端口：{{ Experiment.ExperimentPorts }}</h4>
+                <h4>实验指导书：{{ Experiment.ExperimentGuidance.GuidanceName }}</h4>
+                <button class="view-details-btn"
+                        onclick="window.location.href='/Experiment/?CourseID={{ Course.id }}&ExperimentID={{ Experiment.id }}'">
+                    启动实验
+                </button>
+            </div>
+        {% endfor %}
+    </section>
+</main>
+<div>
+    <nav>
+        <form id="file-upload-form" method="post" enctype="multipart/form-data" action="/UploadExperimentalReport/">
+            <div class="upload-container">
+                <div class="upload-zone">
+                    <i class="fa fa-cloud-upload"></i>
+                    <p>拖拽文件到此处或点击上传实验报告</p>
+                </div>
+                {% csrf_token %}
+                <input type="file" id="file-input" name="file" >
+                <input name="CourseID" value="{{ Course.id }}" hidden="hidden">
+                <input type="submit" value="上传">
+            </div>
+        </form>
+    </nav>
+</div>
+<script>
+    $(document).ready(function () {
+        // handle file input changes
+        $("#file-input").on("change", function () {
+            var files = $(this).get(0).files;
+            processFiles(files);
+        });
+
+        // handle drag and drop events
+        $("body").on("drag dragstart dragend dragover dragenter dragleave drop", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+            .on("dragover dragenter", function () {
+                $("body").addClass("is-dragover");
+            })
+            .on("dragleave dragend drop", function () {
+                $("body").removeClass("is-dragover");
+            })
+            .on("drop", function (e) {
+                var files = e.originalEvent.dataTransfer.files;
+                processFiles(files);
+                $("#file-input").get(0).files = files;
+            });
+
+        function processFiles(files) {
+            // handle the files here
+            console.log(files);
+        }
+    });
+
+</script>
 </body>
 </html>

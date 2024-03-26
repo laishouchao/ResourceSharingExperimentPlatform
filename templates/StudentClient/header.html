@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* 设置页面的基本样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* 设置头部样式 */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* 设置按钮基本样式 */
+        button {
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 设置按钮颜色 */
+        .view-details-btn {
+            background-color: #4CAF50; /* 绿色背景 */
+            color: #fff; /* 白色文本 */
+        }
+
+        .close-btn {
+            background-color: #f44336; /* 红色背景 */
+            color: #fff; /* 白色文本 */
+        }
+
+        /* 设置按钮鼠标悬停样式 */
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        /* 设置按钮动画效果 */
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* 设置课程列表样式 */
+        .course-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .course-item {
+            width: 30%;
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        /* 设置课程详情页面样式 */
+        .course-detail {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2;
+        }
+
+        .course-detail-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            color: #fff;
+            height: 60px;
+        }
+
+        nav .system-name {
+            text-decoration: none; /* 取消下划线 */
+            font-weight: bold; /* 加粗文本 */
+            font-size: 25px; /* 增大字号 */
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-right {
+            position: absolute;
+            right: 0;
+        }
+
+
+        .nav-left a:first-child {
+            margin-right: 20px;
+        }
+
+        .nav-right a {
+            margin-left: 20px;
+        }
+
+        nav img {
+            width: 50px; /* 设置宽度 */
+            height: 50px; /* 设置高度 */
+        }
+
+
+        nav a {
+            color: #fff; /* 设置文本颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            font-size: 16px; /* 设置字体大小 */
+            padding: 12px 20px; /* 设置内边距 */
+            margin-right: 10px; /* 设置右外边距 */
+        }
+
+        nav a:hover {
+            background-color: #333; /* 设置鼠标悬停背景颜色 */
+            color: #4CAF50; /* 设置鼠标悬停文本颜色 */
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-left">
+            <a>
+                <img src="/static/logo.jpg" alt="Logo">
+            </a>
+            <a class="system-name">计算资源共享实验系统</a>
+            <a href="/">主页</a>
+
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <a href="/PasswordChange/">{{ user.username }}，您好！</a>
+                <a href="/Logout/">注销</a>
+            {% else %}
+                <a href="/Login/">登陆</a>
+                <a href="/Register/">注册</a>
+            {% endif %}
+
+            {% if user.is_superuser %}
+                <a href="/admin/">后台管理</a>
+            {% endif %}
+        </div>
+    </nav>
+    <hr/>
+    <h1>学校名称</h1>
+</header>
+</body>
+</html>

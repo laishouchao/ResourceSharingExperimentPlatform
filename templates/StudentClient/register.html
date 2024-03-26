@@ -2,7 +2,7 @@
 <html lang="zh-hans">
 
 <head>
-    <title>登录</title>
+    <title>新用户注册</title>
     <style>
         .form-wrap {
             width: 600px;
@@ -40,24 +40,18 @@
 
     </style>
 </head>
-<body>
 <div class="navbar">
     {% include 'StudentClient/header.html' %}
 </div>
-<br/>
-<br/>
-<br/>
-<div class="form-wrap">
-<form method="post" action="{% url 'Login' %}">
-    {% csrf_token %}
-    <label for="username">用户名：</label>
-    <input type="text" name="username" id="username" placeholder="请输入用户名">
-    <br>
-    <label for="password" >密码：</label>
-    <input type="password" name="password" id="password" placeholder="请输入密码">
-    <br>
-    <input type="submit" value="登录" class="btn">
-</form>
-</div>
-</body>
-</html>
+
+
+{% block content %}
+    <div class="form-wrap">
+        <h2>用户注册</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">注册！</button>
+        </form>
+    </div>
+{% endblock %}
